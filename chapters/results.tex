@@ -1,10 +1,10 @@
 \ifmidterm
-\chapter{Preliminary Results \fcolorbox{green}{green!10}{(Sv: Preliminära resultat)}}
+\chapter{Preliminary Results\sv{Preliminära resultat}}
 \else
-\chapter{Results \fcolorbox{green}{green!10}{(Sv: Resultat)}}
+\chapter{Results\sv{Resultat}}
 \fi
 \label{chap:results}
-
+\begin{instructions}
 Tell the reader, in an objective way, without judgements or analysis, what you have achieved\onlyin{midterm}{ so far}.
 \begin{onlyfinal}
 Most importantly, you should include the results of the tests you described in Section~\ref{sec:devprocess} and~\ref{sec:deployment}. Include how you proceeded to conduct the tests:
@@ -48,10 +48,10 @@ Here, you can see how to introduce an image in a figure. The picture shown in Fi
   \label{fig:lion}
 \end{figure}
 
-You can refer to it as Figure~\ref{fig:lion} and in this template it is very likely that it ends up on the \emph{next page}. \emph{Please observe:} \LaTeX{} has very good reasons to put figures where they are put after you compile your work. Don't fight it, it will not be worth the effort. Instead, be very specific in your text what the figure describes and refer to it properly. 
+You can refer to it as Figure~\ref{fig:lion} and in this template it is very likely that it ends up on the \emph{next page}. \emph{Please observe:} \LaTeX{} has very good reasons to put figures where they are put after you compile your work. Don't fight it, it will not be worth the effort. Instead, be very specific in your text what the figure describes and refer to it properly.
 It appears automatically in the list of figures.
 
-If you want to create figures with data directly in the report file, PGFPLOTS and TIKZ can be used. Figure~\ref{fig:iq-plot}  shows the data from table~\ref{tab:example1} plotted as a scatter plot exemplifying this.
+If you want to create figures with data directly in the report file, PGFPLOTS and TIKZ can be used. Figure~\ref{fig:iq-plot}  shows the data from Table~\ref{tab:example1} plotted as a scatter plot exemplifying this.
 
 \begin{figure}[htbp]  % order of priority: h here, t top, b bottom, p page
   \centering
@@ -74,3 +74,4 @@ If you want to create figures with data directly in the report file, PGFPLOTS an
   \caption{A simple scatterplot generated from text data in the report.}
   \label{fig:iq-plot}
 \end{figure}
+\end{instructions}

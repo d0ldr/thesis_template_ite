@@ -7,5 +7,5 @@ sub makeglossaries {
     return $return;
 }
 push @generated_exts, 'glo', 'gls', 'glg', 'acn', 'acr', 'alg', 'ist';
-$pdflatex = 'pdflatex -shell-escape %O %S';
+$pdflatex = 'pdflatex -shell-escape %O %P';
 $pdf_mode = 1;

@@ -24,3 +24,8 @@
 *-gnuplottex*
 *.gnuploterrors
 thesis.pdf
+plan.pdf
+midterm.pdf
+final.pdf
+comment.cut
+*.fdb_latexmk

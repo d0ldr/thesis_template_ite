@@ -1,5 +1,6 @@
-\chapter{Execution Plan \fcolorbox{green}{green!10}{(Sv: Genomförandeplan)}}
+\chapter{Execution Plan\sv{Genomförandeplan}}
 \label{chap:plan}
+\begin{instructions}
 \begin{onlymidterm}
 This chapter is a refined version of the execution plan presented in the Project Plan. The timetable (Gantt chart) must be updated.
 
@@ -11,21 +12,46 @@ Tell the reader how you plan to organise your work. Include a timetable (Gantt c
     \item deliverables and deadlines for informing yourselves for the technical background,
     \item deadlines for practical work.
 \end{itemize}
+\end{instructions}
 
 \begin{onlymidterm}
-\section{Follow-up of the Project Plan \fcolorbox{green}{green!10}{(Sv: Uppföljning av projektplanen)}}
+\section{Follow-up of the Project Plan\sv{Uppföljning av projektplanen}}
 \label{sec:planfollowup}
+\begin{instructions}
 Tell the reader how the work has progressed compared to the Project Plan. If the project plan has changed, this should be stated, for example, if you have changed the requirements specification (Section~\ref{sec:req}) or the project boundaries. Explain why the changes were made and how they affect the remaining work.
+
+Summarise the milestones from the Project Plan in a table like Table~\ref{tab:followup}.
+
+\begin{table}[ht]
+  \centering
+  \caption{Follow-up of the milestones in the Project Plan}
+  \label{tab:followup}
+  \begin{tabular}{llll}
+    \toprule
+    Milestone & Planned & Done / new date & Comment \\
+    \midrule
+    Literature study done & Week 5 & Week 6 & Took longer than planned \\
+    First prototype & Week 8 & Week 8 & \\
+    Tests finished & Week 12 & Week 14 (new) & Hardware delivered late \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+\end{instructions}
 \end{onlymidterm}
 
 \begin{onlyplan}
-\section{Chosen area of the Technical background
- \\\fcolorbox{green}{green!10}{(Sv: Valt område för teknisk bakgrund)}}
+\section{Chosen area of the Technical background\sv{Valt område för teknisk bakgrund}}
 \label{sec:chosentechbg}
+\begin{instructions}
 In which area should you describe your technical background of the project? Give a brief overview of the current state of knowledge. Later, you will expand the technical background to become a separate chapter in the half-time report and the final thesis.
+\end{instructions}
+\end{onlyplan}
 
-\section{UtExpo Display \fcolorbox{green}{green!10}{(Sv: UtExpo)}}
+\begin{notfinal}
+\section{UtExpo Display\sv{UtExpo}}
 \label{sec:utexpo}
+\begin{instructions}
+\begin{onlyplan}
 In your project plan, describe what you plan to show at UtExpo. Is it a circuit that does something specific or a software that does something specific? What makes your exhibition at UtExpo interesting?
 
 Here, you can see how to introduce an image in a figure. The picture shown in Figure~\ref{fig:lion-plan} is merely for decorative purposes and shows a cartoon of a lion winking while handling books.
@@ -39,3 +65,8 @@ Here, you can see how to introduce an image in a figure. The picture shown in Fi
 
 You can refer to it as Figure~\ref{fig:lion-plan} and in this template it is very likely that it ends up on the \emph{next page}. \emph{Please observe:} \LaTeX{} has very good reasons to put figures where they are put after you compile your work. Don't fight it, it will not be worth the effort. Instead, be very specific in your text what the figure describes and refer to it properly.
 \end{onlyplan}
+\begin{onlymidterm}
+Briefly update the reader on your plans for UtExpo. What will you show, has it changed since the Project Plan, and what remains to be done before the exhibition?
+\end{onlymidterm}
+\end{instructions}
+\end{notfinal}

@@ -64,6 +64,17 @@
 \DeclareOption{halftime}{\def\hh@mode{midterm}}
 \DeclareOption{final}{\def\hh@mode{final}}
 
+% Template hints: the green "(Sv: ...)" boxes and the instructions environment.
+% Option nohints hides them, e.g. to see the real length of your own text.
+\newif\ifhh@hints
+\hh@hintstrue
+\DeclareOption{nohints}{\hh@hintsfalse}
+
+% Body text is ragged right (left aligned) like the HH Word template.
+% Option justified gives justified text instead.
+\newif\ifhh@justified
+\DeclareOption{justified}{\hh@justifiedtrue}
+
 
 % British
 \newif\ifcapitalize
@@ -258,6 +269,11 @@
 
 \ProcessOptions
 
+% The mode can be overridden from the command line by defining \hhmode before
+% the document is read, e.g.  latexmk -usepretex='\def\hhmode{midterm}' thesis
+% (used by "make all-modes")
+\ifdefined\hhmode \let\hh@mode\hhmode \fi
+
 % Set the mode switches from the selected option
 \def\hh@tmp{plan}\ifx\hh@mode\hh@tmp \plantrue \fi
 \def\hh@tmp{midterm}\ifx\hh@mode\hh@tmp \midtermtrue \fi
@@ -317,13 +333,13 @@
 
 %% CLASS FILE LOADING
 
-\LoadClass[a4paper,11pt,openright,twoside]{report}
+\LoadClass[a4paper,12pt,openright,twoside]{report}
 
 %% PACKAGE LOADING
 
-\RequirePackage[utf8]{inputenc}             % for special characters in input
 \RequirePackage[T1]{fontenc}                % modern font encoding
-\RequirePackage[charter, cal=cmcal]{mathdesign} % main font with math support
+\RequirePackage{newtxtext}                  % main font: Times (as the HH Word template)
+\RequirePackage{newtxmath}                  % math font matching Times
 \RequirePackage[scaled=.88]{berasans}       % sans serif font
 \RequirePackage[scaled=.82]{DejaVuSansMono} % monospace font (for code)
 \RequirePackage{listings}                   % code listings
@@ -335,6 +351,9 @@
 \RequirePackage{amsmath}                    % advanced math typesetting
 \RequirePackage{siunitx}                    % numbers and SI units, e.g. \qty{3.2}{\milli\ampere}
 \RequirePackage{comment}                    % mode dependent environments (see below)
+\RequirePackage{titlesec}                   % heading layout
+\RequirePackage[skip=6pt]{parskip}          % no indent, 6 pt between paragraphs
+\RequirePackage{ragged2e}                   % ragged right text with hyphenation
 \RequirePackage[                            % subfigures with captions within figures
     font=small,                             % and customisation of captions
     labelfont=bf,
@@ -408,11 +427,55 @@
 \iffinal   \includecomment{onlyfinal}   \excludecomment{notfinal}
 \else      \excludecomment{onlyfinal}   \includecomment{notfinal}   \fi
 
+%% TEMPLATE HINTS
+%   \sv{Inledning}   Swedish heading name in a green box after an English heading
+%   \hint{(if applicable)}  short red hint text, e.g. in a heading
+%   \begin{instructions} ... \end{instructions}   instruction text from the template
+% Both disappear with the class option nohints. Write your own text outside the
+% instructions environments (or delete them when you no longer need them).
+\DeclareRobustCommand{\sv}[1]{%
+    \ifhh@hints\ \allowbreak\fcolorbox{green}{green!10}{(Sv: #1)}\fi
+}
+\DeclareRobustCommand{\hint}[1]{\ifhh@hints\textcolor{red}{#1}\fi}
+% Keep the Swedish heading names out of the table of contents and PDF bookmarks
+\pretocmd{\tableofcontents}{\let\hh@sv\sv\let\sv\@gobble}{}{}
+\apptocmd{\tableofcontents}{\let\sv\hh@sv}{}{}
+\pdfstringdefDisableCommands{\let\sv\@gobble\let\hint\@gobble}
+\ifhh@hints \includecomment{instructions} \else \excludecomment{instructions} \fi
+
 %% CUSTOMISATION
 
-% Page geometry and spacing (same for even and odd pages)
-\geometry{left=4cm, right=4cm, top=4cm, bottom=4.5cm}
+% Page layout and body text as in the HH Word template (mall-examensarbeten-uppsatser):
+% A4, margins 3 cm left/right and 2.5 cm top/bottom, Times 12 pt,
+% line spacing 1.15 (Word "multiple 1.15" = 15.9 pt baseline distance),
+% 6 pt space after paragraphs, no paragraph indent, left aligned.
+\geometry{left=3cm, right=3cm, top=2.5cm, bottom=2.5cm,
+    footskip=20pt}                          % page number position as in Word
+\linespread{1.095}                          % 14.5 pt * 1.095 = 15.9 pt
+\raggedbottom
+\emergencystretch=3em                      % avoid overfull lines, e.g. long headings in the contents
+\ifhh@justified\else
+    \setlength{\RaggedRightRightskip}{0pt plus 4em}
+    \AtBeginDocument{\RaggedRight}
+\fi
 \frenchspacing
+
+% Headings in Gill Sans (free clone GilliusADF), not bold, as in the Word template:
+% chapter 18 pt, section 14 pt, subsection 12 pt. The spacing below is calibrated so
+% that the distances to the body text match the Word template (measured in its PDF).
+\newcommand*{\headingfont}{\fontfamily{GilliusADF-LF}\fontseries{m}\fontshape{n}\selectfont}
+\titleformat{\chapter}[hang]
+    {\raggedright\headingfont\fontsize{18}{27}\selectfont}{\thechapter}{0.6em}{}
+\titleformat{\section}
+    {\raggedright\headingfont\fontsize{14}{21}\selectfont}{\thesection}{0.6em}{}
+\titleformat{\subsection}
+    {\raggedright\headingfont\fontsize{12}{18}\selectfont}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}
+    {\raggedright\headingfont\fontsize{12}{18}\selectfont}{\thesubsubsection}{0.6em}{}
+\titlespacing*{\chapter}{0pt}{-24.7pt}{3pt}
+\titlespacing*{\section}{0pt}{5.7pt}{7.8pt}
+\titlespacing*{\subsection}{0pt}{7.1pt}{6.3pt}
+\titlespacing*{\subsubsection}{0pt}{7.1pt}{6.3pt}
 
 % Roman page numbers from the beginning of the document
 \pagenumbering{roman}
@@ -543,3 +606,21 @@
        \@starttoc{lol}%
        \endgroup%
        }%
+
+% Print the lists of figures, tables and listings only when they have entries
+% (e.g. no empty list of listings in the half-time report). Which lists are used
+% is recorded in the .aux file, so this takes effect from the second compilation.
+\pretocmd{\addcontentsline}{\hh@markused{#1}}{}{}
+\newcommand*{\hh@markused}[1]{%
+    \ifcsdef{hh@written@#1}{}{%
+        \csgdef{hh@written@#1}{}%
+        \protected@write\@auxout{}{\string\csgdef{hh@used@#1}{}}%
+    }%
+}
+\newcommand*{\hh@iflistused}[2]{\ifcsdef{hh@used@#1}{#2}{}}
+\let\hh@listoffigures\listoffigures
+\let\hh@listoftables\listoftables
+\let\hh@lstlistoflistings\lstlistoflistings
+\renewcommand*{\listoffigures}{\hh@iflistused{lof}{\hh@listoffigures}}
+\renewcommand*{\listoftables}{\hh@iflistused{lot}{\hh@listoftables}}
+\renewcommand*{\lstlistoflistings}{\hh@iflistused{lol}{\hh@lstlistoflistings}}

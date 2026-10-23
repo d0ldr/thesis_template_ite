@@ -17,6 +17,8 @@ Choose the report, language and programme in the first line of `thesis.tex`:
 
 - Language: `english` (or `british`/`american`) or `swedish`
 - Programme: `tgelt`, `tgdat`, `tgmek`, `tacda`, `tacis`, `tacis.elde`
+- Optional: `nohints` hides all template instructions and the green Swedish heading names
+  (to see your own text and its real length); `justified` gives justified instead of left-aligned text
 
 Write in the same files the whole course. When it is time for the next report,
 change `plan` → `midterm` → `final` and the template adds or removes the parts needed.
@@ -27,7 +29,7 @@ change `plan` → `midterm` → `final` and the template adds or removes the par
 |---|:-:|:-:|:-:|
 | Report type on title page | Project Plan | Half-time Report | – |
 | Abstract, Sammanfattning, Preface | | | x |
-| Lists of figures/tables/listings, acronyms | | x | x |
+| Lists of figures/tables/listings, acronyms (each only if non-empty) | | x | x |
 | Introduction | x | x | x |
 | Technical Background | | x | x |
 | Method (reproducibility intro in midterm/final) | x | x | x |
@@ -35,8 +37,9 @@ change `plan` → `midterm` → `final` and the template adds or removes the par
 | Results | | Preliminary | x |
 | Discussion, Conclusion | | | x |
 | Execution Plan with timetable | x | x | |
-| – Follow-up of the project plan | | x | |
-| – Chosen area of technical background, UtExpo | x | | |
+| – Follow-up of the project plan (with milestone table) | | x | |
+| – Chosen area of technical background | x | | |
+| – UtExpo (plan, then short update) | x | x | |
 | Appendices | | x | x |
 
 ## Mode-dependent content in your own text
@@ -54,11 +57,41 @@ change `plan` → `midterm` → `final` and the template adds or removes the par
 
 `\begin{...}` and `\end{...}` of the `only*`/`not*` environments must each be on a line of their own.
 
+## Template hints
+
+```latex
+\section{Background\sv{Bakgrund}}     % Swedish name in a green box
+\section{Deployment \hint{(if applicable)}}   % short red hint
+\begin{instructions}
+Instruction text from the template ...
+\end{instructions}
+Your own text goes outside the instructions environments.
+```
+
+All of these disappear with the class option `nohints`. The Swedish names are never shown in the table of contents.
+
+## Layout
+
+The body text follows the official HH Word template (`mall-examensarbeten-uppsatser.docx`), measured in its PDF:
+
+| | Word template | LaTeX template |
+|---|---|---|
+| Margins | 3 cm left/right, 2.5 cm top/bottom | same |
+| Body font | Times New Roman 12 pt | Times (newtx) 12 pt |
+| Line spacing | 1.15 (15.9 pt between baselines) | 15.9 pt |
+| Paragraphs | 6 pt after, no indent, left aligned | same |
+| Headings | Gill Sans Std 18/14/12 pt, not bold | GilliusADF (free Gill Sans clone) 18/14/12 pt, numbered |
+| Heading spacing | | calibrated to the Word PDF (within 0.1 pt) |
+
+The title page, running headers and chapters starting on odd pages are kept from the previous LaTeX template.
+
 ## Building
 
 - **Overleaf:** upload the folder (or the zip). `.latexmkrc` makes Overleaf build the glossary/acronym list.
 - **Locally:** `latexmk thesis` or `make`. Requires `pdflatex`, `biber` and `makeglossaries`
   (`-shell-escape` is needed for `gnuplottex`).
+- **All three reports at once:** `make all-modes` builds `plan.pdf`, `midterm.pdf` and `final.pdf`
+  regardless of the mode set in `thesis.tex` (handy for checking the template before a course starts).
 
 ## Files
 

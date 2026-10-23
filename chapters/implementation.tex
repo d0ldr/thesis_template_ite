@@ -1,6 +1,6 @@
-\chapter{Implementation \fcolorbox{green}{green!10}{(Sv: Genomförande)}}
+\chapter{Implementation\sv{Genomförande}}
 \label{chap:implementation}
-
+\begin{instructions}
 Tell the reader the technical details of your work. Use technical language.
 
 \textbf{You should have in mind that this part, together with what you wrote in Chapter~\ref{chap:method} (especially Section~\ref{sec:techdesign}),
@@ -30,8 +30,6 @@ plt.plot(x, y)
 plt.show()
 \end{lstlisting}
 
-
-
 \begin{lstlisting}[
     caption={Java code in \LaTeX{} document},
     label=lst:Javadoc,
@@ -44,6 +42,11 @@ public class Example{
 }
 \end{lstlisting}
 
-\section{Deployment \fcolorbox{green}{green!10}{(Sv: Leverans)} \textcolor{red}{(if applicable)}}
+Numbers with units are written with \texttt{siunitx}, e.g.\ \qty{3.3}{\volt}, \qty{20}{\milli\ampere} or \qty{1.5}{\giga\hertz}.
+\end{instructions}
+
+\section{Deployment\sv{Leverans} \hint{(if applicable)}}
 \label{sec:deployment}
+\begin{instructions}
 If you have built an artifact by the request of a company or a teacher or a research group to be part of a larger system, use this section to tell the reader what steps have to be taken to deploy your solution to make it work together with the overall system. You should include the design of tests for the integration.
+\end{instructions}
