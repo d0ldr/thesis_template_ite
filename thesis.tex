@@ -1,0 +1,89 @@
+% HH ITE thesis template: one template for the project plan, the half-time
+% report and the final thesis.
+%
+% Edit history:
+% Updated by Pererik 20250224: removed short title and short author. Changed the hhthesis.cls (included blindtext as well).
+% Updated by Pererik 20250305: removed red text (confusing or redundant). homogenized with the halft-time template and with the v3 of the instructions. Class changes (spelling error).
+% Updated by Pererik 20250401 - fixing that long titles put the HH logo to the next page. Class changes.
+% Updated by Pererik 20260109 to at leaste moderately suit the TACIS ELDE students master's thesis.
+% Updated 20261023: project plan, half-time report and thesis merged into one template (class options plan/midterm/final).
+
+%TODO: Compare margins, font size and line distance to the actual Word template and correct if needed. Margins *larger* in the Word template. Font size possibly also larger.
+%TODO: Fix hyphenation (both Swedish and English I suspect). At least Swedish. Some control statement in the class file.
+
+\documentclass[english,tgmek,plan]{hhthesis}
+
+%% Above, choose:
+%%   - the report you are writing:  plan, midterm or final
+%%       plan    = project plan      (Sv: projektplan)
+%%       midterm = half-time report  (Sv: halvtidsrapport)
+%%       final   = final thesis      (Sv: slutrapport)
+%%   - your language:  english or swedish
+%%   - your programme: tgelt, tgdat, tgmek, tacda, tacis or tacis.elde
+%% Keep writing in the same files during the whole course: when you go from
+%% the plan to the half-time report (and then to the thesis), just change the
+%% option and the template adds/removes the chapters and sections needed.
+
+\usepackage{tikz}
+\usetikzlibrary{intersections, through}
+\usetikzlibrary{datavisualization.formats.functions} % BPA tillägg
+\usetikzlibrary{decorations.pathreplacing,calligraphy}
+\usetikzlibrary{math}
+\usetikzlibrary{calc}
+\usepackage{pgfplots} % it is a must when it needs reading csv files
+\pgfplotsset{compat=1.18,
+            every axis/.append style={
+                line width=1pt
+            }}
+
+\addbibresource{thesis.bib}
+
+\input{glossary.tex} % add glossary and acronym lists before document
+
+\date{\today}
+\authorone{Name1 Surname1}
+\authortwo{Name2 Surname2}
+
+\title{The Title of Your Thesis}
+\subtitle{Subtitle (optional)}
+% The report type ("Project Plan", "Half-time Report") is added to the
+% title page automatically. Do not put it in the subtitle.
+
+\begin{document}
+
+% Abstract, Sammanfattning and Preface: final thesis only
+\inputin{final}{frontmatter/abstract}
+\inputin{final}{frontmatter/sammanfattning}
+\inputin{final}{frontmatter/preface}
+
+\tableofcontents
+
+% Lists of figures, tables, listings and acronyms: half-time report and thesis
+\begin{notplan}
+\listoffigures
+\listoftables
+\lstlistoflistings
+
+\printglossary[type=\acronymtype] % Print acronyms
+\end{notplan}
+
+%                                         plan   midterm   final
+\input{chapters/introduction}           %   x       x        x
+\inputin{midterm,final}{chapters/technical_background} %     x        x
+\input{chapters/method}                 %   x       x        x
+\inputin{final}{chapters/implementation} %                   x
+\inputin{midterm,final}{chapters/results} %         x        x  (preliminary in midterm)
+\inputin{final}{chapters/discussion}    %                    x
+\inputin{final}{chapters/conclusion}    %                    x
+\inputin{plan,midterm}{chapters/executionplan} % x  x  (with plan follow-up in midterm)
+
+\chapter*{\bibname}
+\printbibliography[heading=none]
+
+\IfMode{midterm,final}{%
+\appendix
+\input{appendices/a-appendix.tex}
+%\input{appendices/b-appendix.tex}
+}{}
+
+\end{document}

@@ -1,0 +1,49 @@
+\chapter{Implementation \fcolorbox{green}{green!10}{(Sv: Genomförande)}}
+\label{chap:implementation}
+
+Tell the reader the technical details of your work. Use technical language.
+
+\textbf{You should have in mind that this part, together with what you wrote in Chapter~\ref{chap:method} (especially Section~\ref{sec:techdesign}),
+should allow a person with a background in the field to reproduce your work.}
+
+Include what tools you used and, when applicable, code listings (\textit{and not screenshots}), mathematical equations, database tables, etc.
+
+Here is how to do code listings. They appear automatically in the list of listings.
+\lstinputlisting[%
+    caption={Java example from file},
+    label=lst:javafile,
+    language=Java,
+    numbers=left
+]{listings/Example.java}
+
+\begin{lstlisting}[
+    caption={Python code in \LaTeX{} document},
+    label=lst:pythondoc,
+    language=Python]
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(0, 1)
+y = np.sin(2 * np.pi * x)
+
+plt.plot(x, y)
+plt.show()
+\end{lstlisting}
+
+
+
+\begin{lstlisting}[
+    caption={Java code in \LaTeX{} document},
+    label=lst:Javadoc,
+    language=Java]
+public class Example{
+    public static void main(String[] args){
+        System.out.println("Hello world!");
+    }
+
+}
+\end{lstlisting}
+
+\section{Deployment \fcolorbox{green}{green!10}{(Sv: Leverans)} \textcolor{red}{(if applicable)}}
+\label{sec:deployment}
+If you have built an artifact by the request of a company or a teacher or a research group to be part of a larger system, use this section to tell the reader what steps have to be taken to deploy your solution to make it work together with the overall system. You should include the design of tests for the integration.
