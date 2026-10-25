@@ -9,4 +9,55 @@ You need to use \textbf{technical language}
     \item for the concepts that are introduced in the literature that you read to find how others have solved similar problems.
 \end{itemize}
 This means that you might have to make definitions. You will find them in books that were used in the courses and in published articles.
+
+\paragraph{Example: equations and a block diagram}
+Below is a very short example from control theory that shows how to write equations, how to number them and how to refer to them in the text. Give every equation that you refer to a \texttt{\textbackslash label}, and refer to it with \texttt{\textbackslash eqref} or \texttt{\textbackslash cref}. Explain every symbol the first time it is used.
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[
+      node distance = 8mm and 12mm,
+      block/.style  = {draw, thick, minimum width=14mm, minimum height=9mm},
+      sum/.style    = {draw, thick, circle, inner sep=0pt, minimum size=5mm},
+      >={Stealth[length=2.5mm]}, thick]
+    \node (input)                          {$r(t)$};
+    \node[sum,   right=of input]  (sum)    {};
+    \node[block, right=of sum]    (ctrl)   {$C(s)$};
+    \node[block, right=of ctrl]   (plant)  {$G(s)$};
+    \coordinate[right=8mm of plant] (out);
+    \node[right=8mm of out]       (output) {$y(t)$};
+    \coordinate[below=of plant]   (fb);
+
+    \draw[->] (input) -- (sum);
+    \draw[->] (sum)   -- node[above] {$e(t)$} (ctrl);
+    \draw[->] (ctrl)  -- node[above] {$u(t)$} (plant);
+    \draw[->] (plant) -- (output);
+    \draw[->] (out) |- (fb) -| node[pos=0.95, left] {$-$} (sum);
+    \node[above left=0.5mm and 0.5mm of sum.west] {$+$};
+    \fill (out) circle (1.5pt);
+  \end{tikzpicture}
+  \caption{A feedback control system with controller $C(s)$ and process $G(s)$, drawn with TikZ.}
+  \label{fig:feedback}
+\end{figure}
+
+\Cref{fig:feedback} shows a feedback control system. The controller $C(s)$ compares the reference $r(t)$ with the measured output $y(t)$ and acts on the control error
+\begin{equation}
+    e(t) = r(t) - y(t).
+    \label{eq:error}
+\end{equation}
+A common choice of controller is the PID controller
+\begin{equation}
+    u(t) = K_p\, e(t) + K_i \int_0^t e(\tau)\,\mathrm{d}\tau + K_d \frac{\mathrm{d}e(t)}{\mathrm{d}t},
+    \label{eq:pid}
+\end{equation}
+where $K_p$, $K_i$ and $K_d$ are the proportional, integral and derivative gains. Using the Laplace transform, the controller in \eqref{eq:pid} becomes $C(s) = K_p + K_i/s + K_d s$, and with the process $G(s)$ the transfer function of the closed-loop system from $r$ to $y$ is
+\begin{equation}
+    G_{\mathrm{cl}}(s) = \frac{Y(s)}{R(s)} = \frac{C(s)G(s)}{1 + C(s)G(s)}.
+    \label{eq:closedloop}
+\end{equation}
+\Cref{eq:closedloop} is obtained by combining \eqref{eq:error} with $Y(s) = G(s)C(s)E(s)$.
+Equations that are not referred to can be written without number, using \texttt{equation*}:
+\begin{equation*}
+    \lim_{t\to\infty} e(t) = 0 \quad \text{(no steady-state error for a step in $r$ when $K_i > 0$).}
+\end{equation*}
 \end{instructions}
