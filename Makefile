@@ -12,8 +12,16 @@ all-modes: $(addsuffix .pdf,$(MODES))
 $(addsuffix .pdf,$(MODES)): %.pdf: $(SRCS)
 	latexmk -jobname=$* -usepretex='\def\hhmode{$*}' thesis
 
+JOBS=thesis $(MODES)
+
+# Remove temporary build files but keep the PDFs, e.g.  make all-modes clean
 clean:
-	latexmk -C thesis
-	$(foreach m,$(MODES),latexmk -C -jobname=$(m) thesis;)
+	$(foreach j,$(JOBS),latexmk -c -jobname=$(j) thesis;)
+	-@$(RM) $(foreach j,$(JOBS),$(j).bbl $(j).run.xml) comment.cut
 	-@$(RM) $(wildcard *-gnuplottex*) $(wildcard *.gnuploterrors)
-.PHONY: all-modes clean
+
+# Remove all generated files, including the PDFs
+distclean: clean
+	$(foreach j,$(JOBS),latexmk -C -jobname=$(j) thesis;)
+
+.PHONY: all-modes clean distclean

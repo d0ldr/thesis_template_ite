@@ -92,6 +92,8 @@ The title page, running headers and chapters starting on odd pages are kept from
   (`-shell-escape` is needed for `gnuplottex`).
 - **All three reports at once:** `make all-modes` builds `plan.pdf`, `midterm.pdf` and `final.pdf`
   regardless of the mode set in `thesis.tex` (handy for checking the template before a course starts).
+- **Cleaning up:** `make clean` removes all temporary build files but keeps the PDFs;
+  `make distclean` also removes the PDFs. They can be combined, e.g. `make all-modes clean`.
 
 ## Files
 

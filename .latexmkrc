@@ -6,6 +6,6 @@ sub makeglossaries {
     my $return = system "makeglossaries", "-d", "$path", "$base_name";
     return $return;
 }
-push @generated_exts, 'glo', 'gls', 'glg', 'acn', 'acr', 'alg', 'ist';
+push @generated_exts, 'glo', 'gls', 'glg', 'acn', 'acr', 'alg', 'ist', 'lol', 'glsdefs';
 $pdflatex = 'pdflatex -shell-escape %O %P';
 $pdf_mode = 1;
