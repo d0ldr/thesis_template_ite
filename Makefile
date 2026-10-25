@@ -10,18 +10,21 @@ thesis.pdf: $(SRCS)
 all-modes: $(addsuffix .pdf,$(MODES))
 
 $(addsuffix .pdf,$(MODES)): %.pdf: $(SRCS)
-	latexmk -jobname=$* -usepretex='\def\hhmode{$*}' thesis
+	latexmk -jobname=$* -usepretex="\def\hhmode{$*}" thesis
 
 JOBS=thesis $(MODES)
 
+# Each command is on its own line and no shell features are used, so the
+# Makefile works both with a Unix shell and with cmd.exe on Windows.
+
 # Remove temporary build files but keep the PDFs, e.g.  make all-modes clean
-clean:
-	$(foreach j,$(JOBS),latexmk -c -jobname=$(j) thesis;)
-	-@$(RM) $(foreach j,$(JOBS),$(j).bbl $(j).run.xml) comment.cut
-	-@$(RM) $(wildcard *-gnuplottex*) $(wildcard *.gnuploterrors)
+clean: $(addprefix clean-,$(JOBS))
+clean-%:
+	latexmk -c -jobname=$* thesis
 
 # Remove all generated files, including the PDFs
-distclean: clean
-	$(foreach j,$(JOBS),latexmk -C -jobname=$(j) thesis;)
+distclean: $(addprefix distclean-,$(JOBS))
+distclean-%:
+	latexmk -C -jobname=$* thesis
 
 .PHONY: all-modes clean distclean
