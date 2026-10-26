@@ -384,6 +384,7 @@
 \RequirePackage{booktabs}                   % better formatting of tables
 \RequirePackage{gnuplottex}                 % for generating gnuplots on the fly
 \RequirePackage{hyperref}                   % interactive cross references
+\RequirePackage{xurl}                       % URLs may break after any character
 \ifcapitalize
     \RequirePackage[capitalize,noabbrev]{cleveref}   % automatic cross references
 \else
@@ -550,6 +551,33 @@
 
 % Make \fullcite show all authors irrespectively of maxcitenames
 \preto\fullcite{\AtNextCite{\defcounter{maxnames}{99}}}
+
+% Long URLs and DOIs in the bibliography: allow line breaks after any letter
+% or digit (together with xurl), so they never stick out into the margin.
+% The penalties make LaTeX prefer breaks at / . - etc., and to move a short
+% URL to the next line rather than splitting it.
+\setcounter{biburlnumpenalty}{9000}
+\setcounter{biburlucpenalty}{8000}
+\setcounter{biburllcpenalty}{7000}
+% No extra stretchable space inside URLs (biblatex default), and a ragged right
+% reference list (also with option justified), so broken URLs are not spread out
+\biburlbigskip=0mu\relax
+\biburlnumskip=0mu\relax
+\biburlucskip=0mu\relax
+\biburllcskip=0mu\relax
+\renewcommand*{\bibfont}{\RaggedRight}
+
+% A DOI is a permanent link: when an entry has a DOI, its URL (and access
+% date) is not printed. Delete these lines to print both.
+\DeclareSourcemap{
+    \maps[datatype=bibtex]{
+        \map{
+            \step[fieldsource=doi, final]
+            \step[fieldset=url, null]
+            \step[fieldset=urldate, null]
+        }
+    }
+}
 
 % Colour palette
 \definecolor{thesisblue}{rgb}{.15, .15, .6}

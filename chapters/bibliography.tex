@@ -1,0 +1,44 @@
+\chapter*{\bibname}
+\label{chap:bibliography}
+\begin{instructions}
+\section*{How to write the references}
+Add every source to \texttt{thesis.bib} and cite it in the text with \texttt{\textbackslash cite\{key\}}. Only sources that you cite appear in this list, numbered in the order they are first cited.
+
+\paragraph{Use DOIs, not URLs}
+Most scientific publications (journal and conference papers, many books and standards) have a DOI (Digital Object Identifier), a permanent link that always leads to the publication. When a source has a DOI:
+\begin{itemize}
+    \item give it in the \texttt{doi} field, e.g.\ \texttt{doi = \{10.1007/s10980-011-9674-3\}} (without \texttt{https://doi.org/}),
+    \item skip the URL. The template automatically leaves out the URL and the access date of any entry that has a DOI, as for \cite{wu2011}.
+\end{itemize}
+You usually find the DOI on the first page of the paper or on the publisher's web page. Search engines such as Google Scholar, IEEE Xplore and the university library can export a complete BibTeX entry, but always check it before you use it.
+
+\paragraph{When a URL is needed}
+In most cases a URL can be skipped. Use a URL only for sources that exist \emph{only} online and have no DOI, such as web pages, data sheets, software and data repositories. Then:
+\begin{itemize}
+    \item use the shortest stable address of the source itself, as in \cite{overleafbiblatex},
+    \item give the date you accessed it in the \texttt{urldate} field, e.g.\ \texttt{urldate = \{2026-10-26\}},
+    \item never use links to search results (e.g.\ Google or Google Scholar), links through the library proxy or a login, links with tracking or session parameters (everything after \texttt{?} such as \texttt{?utm\_source=\ldots}), or links to unofficial copies (e.g.\ ResearchGate) when the original is available.
+\end{itemize}
+Long URLs and DOIs are broken across lines automatically, so they never stick out into the margin.
+
+A complete entry for a journal article looks like this:
+
+\noindent\begin{minipage}{\linewidth}
+\begin{verbatim}
+@article{wu2011,
+  title   = {Improving the writing of research papers:
+             {IMRAD} and beyond},
+  author  = {Wu, Jianguo},
+  journal = {Landscape Ecology},
+  volume  = {26},
+  number  = {10},
+  pages   = {1345--1349},
+  year    = {2011},
+  doi     = {10.1007/s10980-011-9674-3}
+}
+\end{verbatim}
+\end{minipage}
+
+Note the braces around \texttt{\{IMRAD\}}: the reference style changes titles to lower case (\enquote{Imrad}), except for text in braces. Protect abbreviations and names in titles this way, e.g.\ \texttt{\{IEEE\}}, \texttt{\{PID\}} or \texttt{\{Kalman\}}.
+\end{instructions}
+\printbibliography[heading=none]

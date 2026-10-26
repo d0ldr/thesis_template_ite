@@ -102,9 +102,11 @@ thesis.tex          main file, choose mode here
 hhthesis.cls        document class
 frontmatter/        abstract, sammanfattning, preface (final only)
 chapters/           all chapters, shared between the modes
+                    (bibliography.tex: reference list + instructions on DOIs/URLs)
 appendices/
 glossary.tex        glossary and acronyms
-thesis.bib          references
+thesis.bib          references (URL is dropped automatically when a DOI is given;
+                    long URLs break across lines)
 figures/ csvtables/ listings/
 ```
 

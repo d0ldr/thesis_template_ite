@@ -1,10 +1,15 @@
+% A journal article with a DOI. The url field is NOT printed, because the
+% entry has a DOI (see the \DeclareSourcemap in hhthesis.cls).
 @article{wu2011,
-  title={Improving the writing of research papers: IMRAD and beyond},
+  title={Improving the writing of research papers: {IMRAD} and beyond},
   author={Wu, Jianguo},
   journal={Landscape Ecology},
   volume={26},
+  number={10},
   pages={1345-1349},
-  year={2011}
+  year={2011},
+  doi={10.1007/s10980-011-9674-3},
+  url={https://link.springer.com/article/10.1007/s10980-011-9674-3}
 }
 
 @misc{overleaf,
@@ -13,9 +18,18 @@ url = {https://www.overleaf.com/},
 urldate = {2026-10-23}
 }
 
+% A web page: only available online, so the URL (and access date) is needed.
+% Long URLs are broken across lines automatically.
+@online{overleafbiblatex,
+  title = {Bibliography management with {biblatex}},
+  organization = {Overleaf},
+  url = {https://www.overleaf.com/learn/latex/Bibliography_management_with_biblatex},
+  urldate = {2026-10-26}
+}
+
 @article{oetiker2001not,
-  title={The not so short introduction to LaTeX},
+  title={The not so short introduction to {\LaTeX}},
   author={Oetiker, Tobias and Partl, Hubert and Hyna, Irene and Schlegl, Elisabeth},
-  journal={Typeset LATEX 2$\varepsilon$},
+  journal={Typeset {\LaTeX} 2$\varepsilon$},
   year={2001}
 }
