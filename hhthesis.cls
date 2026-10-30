@@ -290,25 +290,29 @@
     \fi
 }
 
-% New version of title page, uses options
-\AtBeginDocument{
-    \begin{titlepage}
-        \AddToShipoutPictureBG*{%
-  \AtPageLowerLeft{\makebox[200mm][r]{%
-        \raisebox{10mm}[0mm][0mm]{%
-        \includegraphics[width=32mm]{\logotype}}
-    }}}
-    \newgeometry{top = 3mm, bottom = 9mm, left = 65pt, right = 3mm}
+% Title page.
+% The whole page is typeset in one box, so it can never spill over to a
+% second page. If a long title/subtitle makes the box taller than the page,
+% the space above the title is reduced first (70mm down to 15mm), and then
+% the title and subtitle fonts are made smaller step by step.
+\newlength{\hh@tpgap}
+\newsavebox{\hh@tpbox}
+\newif\ifhh@tpfits
+\newcommand*{\hh@titlesize}{30pt}
+\newcommand*{\hh@subtitlesize}{20pt}
+\newcommand*{\hh@titlepagebody}{%
     \hfill\includegraphics[width = 141mm]{hh_header_final_beta} \\
     \begin{tabular}{l}
     \vspace{3mm} \\
     \fontsize{32pt}{0pt} \textcolor{hhlpr}{\fontfamily{bch}\selectfont \textbf{\course}} \\
     \vspace{10pt} \\
     \fontsize{24pt}{0pt} \fontfamily{lmss}\selectfont \program \ \pcredits \\
-    \vspace{70mm} \\
-    \parbox{.8\linewidth}{\fontsize{30pt}{30pt} \fontfamily{lmss}\selectfont \@title} \\
+    \vspace{\hh@tpgap} \\
+    \parbox{.8\linewidth}{\raggedright\hyphenpenalty=10000 \exhyphenpenalty=10000
+        \fontsize{\hh@titlesize}{\hh@titlesize} \fontfamily{lmss}\selectfont \@title} \\
     \vspace{10pt} \\
-    \fontsize{20pt}{0pt} \fontfamily{lmss}\selectfont \@subtitle \\
+    \parbox[t]{.8\linewidth}{\raggedright\hyphenpenalty=10000 \exhyphenpenalty=10000
+        \fontsize{\hh@subtitlesize}{1.2\dimexpr\hh@subtitlesize\relax} \fontfamily{lmss}\selectfont \@subtitle} \\
     \iffinal\else
     \vspace{10pt} \\
     \fontsize{20pt}{0pt} \textcolor{hhlpr}{\fontfamily{lmss}\selectfont \reporttype} \\
@@ -323,11 +327,52 @@
      \fontsize{15pt}{0pt} \selectfont \@authortwo
      \vspace{10pt} \\
      \fontsize{15pt}{0pt} \selectfont \@authorthree
-    \end{tabular}
+    \end{tabular}\par
+}
+% Try title size #1 and subtitle size #2 (unless an earlier try already fit)
+\newcommand*{\hh@tryfit}[2]{%
+    \ifhh@tpfits\else
+        \def\hh@titlesize{#1}\def\hh@subtitlesize{#2}%
+        \setlength{\hh@tpgap}{70mm}%
+        \setbox\hh@tpbox\vbox{\hh@titlepagebody}%
+        % \@tempdima = how much too tall the page is
+        \setlength{\@tempdima}{\dimexpr\ht\hh@tpbox+\dp\hh@tpbox-\textheight\relax}%
+        \ifdim\@tempdima>\z@
+            \addtolength{\hh@tpgap}{-\@tempdima}%
+            \ifdim\hh@tpgap<15mm\else
+                \hh@tpfitstrue
+                \setbox\hh@tpbox\vbox{\hh@titlepagebody}%
+            \fi
+        \else
+            \hh@tpfitstrue
+        \fi
+    \fi
+}
 
-    \vfill
-    \hfill %\includegraphics[width = 32mm]{\logotype} \hspace{4.5mm} %7.5-3
-
+\AtBeginDocument{
+    \begin{titlepage}
+        \AddToShipoutPictureBG*{%
+  \AtPageLowerLeft{\makebox[200mm][r]{%
+        \raisebox{10mm}[0mm][0mm]{%
+        \includegraphics[width=32mm]{\logotype}}
+    }}}
+    \newgeometry{top = 3mm, bottom = 9mm, left = 65pt, right = 3mm}
+    \hh@tpfitsfalse
+    \hh@tryfit{30pt}{20pt}%
+    \hh@tryfit{26pt}{18pt}%
+    \hh@tryfit{22pt}{16pt}%
+    \hh@tryfit{20pt}{14pt}%
+    \ifhh@tpfits
+        \ClassInfo{hhthesis}{Title page: title \hh@titlesize, subtitle
+            \hh@subtitlesize, space above title \the\hh@tpgap}%
+    \else
+        \setlength{\hh@tpgap}{15mm}%
+        \setbox\hh@tpbox\vbox{\hh@titlepagebody}%
+        \ClassWarning{hhthesis}{Title page: the title and subtitle are too
+            long to fit on the title page. Please shorten them}%
+    \fi
+    \dp\hh@tpbox=\z@ % never let the box push anything to a new page
+    \box\hh@tpbox
     \end{titlepage}
     }
 
