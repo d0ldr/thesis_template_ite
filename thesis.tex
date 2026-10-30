@@ -32,6 +32,32 @@
 \usetikzlibrary{math}
 \usetikzlibrary{calc}
 \usetikzlibrary{positioning, arrows.meta} % block diagrams, e.g. the control loop example
+\usepackage{pgfgantt} % Gantt charts (time plan in the project plan and half-time report)
+\ganttset{
+  hhgantt/.style={                      % common look of the Gantt charts
+    x unit=.45cm, y unit title=.5cm, y unit chart=.5cm,
+    title label font=\scriptsize, title height=1,
+    vgrid={*4{draw=none}, *1{dotted}},  % dotted line every fifth week
+    hgrid=false,
+    bar label font=\small, group label font=\small\bfseries,
+    milestone label font=\small\itshape,
+    bar height=.5, bar top shift=.15,
+    group top shift=.3, group height=.2,
+    milestone top shift=.2, milestone height=.4,
+    milestone left shift=.5, milestone right shift=0, % diamond at the end of its week
+    bar/.append style={fill=blue!25},
+    bar incomplete/.append style={fill=white},
+    group/.append style={fill=black},
+    milestone/.append style={fill=red!70!black, draw=none},
+    progress label text={},             % no "x% complete" text
+    today rule/.style={draw=red, thick},
+    today label font=\small\color{red},
+  },
+  hhplanned/.style={                    % thin grey bar: the original plan
+    bar height=.18, bar top shift=.74,
+    bar/.append style={fill=gray!50, draw=none},
+  },
+}
 \usepackage{pgfplots} % it is a must when it needs reading csv files
 \pgfplotsset{compat=1.18,
             every axis/.append style={

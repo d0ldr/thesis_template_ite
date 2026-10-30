@@ -351,8 +351,16 @@
 \RequirePackage{amsmath}                    % advanced math typesetting
 \RequirePackage{siunitx}                    % numbers and SI units, e.g. \qty{3.2}{\milli\ampere}
 \RequirePackage{comment}                    % mode dependent environments (see below)
-\def\DefaultCutFileName{\def\CommentCutFile{\jobname.cut}}  % temp file of comment, removed by latexmk -c
+% Temp files of comment, removed by latexmk -c. One file per nesting level, so
+% that e.g. an onlyplan block inside an instructions block does not overwrite
+% the file of the outer block while it is being read.
+\newcount\hh@cutdepth
+\def\DefaultCutFileName{\edef\CommentCutFile{\jobname-cut\the\hh@cutdepth.cut}}
 \DefaultCutFileName
+\def\ProcessCutFile{%
+    \global\advance\hh@cutdepth\@ne
+    \input{\CommentCutFile}\relax
+    \global\advance\hh@cutdepth\m@ne}
 \RequirePackage{titlesec}                   % heading layout
 \RequirePackage[skip=6pt]{parskip}          % no indent, 6 pt between paragraphs
 \RequirePackage{ragged2e}                   % ragged right text with hyphenation

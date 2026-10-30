@@ -12,6 +12,81 @@ Tell the reader how you plan to organise your work. Include a timetable (Gantt c
     \item deliverables and deadlines for informing yourselves for the technical background,
     \item deadlines for practical work.
 \end{itemize}
+\begin{onlyplan}
+
+Figure~\ref{fig:gantt-plan} is an example of a Gantt chart for a 20-week project, made with the \texttt{pgfgantt} package. Bars are activities and diamonds are milestones (deadlines). Copy the code and change the activities, weeks and milestones to fit your own project. Week 1 is the first week of the course, not the calendar week.
+
+\begin{figure}[htbp]
+  \centering
+  \begin{ganttchart}[hhgantt]{1}{20}
+    \gantttitle{Week}{20} \\
+    \gantttitlelist{1,...,20}{1} \\
+    \ganttgroup{Planning}{1}{3} \\
+    \ganttbar{Project plan}{1}{3} \\
+    \ganttmilestone{Project plan to examiner}{3} \\
+    \ganttgroup{Technical background}{2}{9} \\
+    \ganttbar{Literature study}{2}{5} \\
+    \ganttbar{Write technical background}{4}{9} \\
+    \ganttgroup{Practical work}{4}{12} \\
+    \ganttbar{Requirements and design}{4}{6} \\
+    \ganttbar{First prototype}{6}{8} \\
+    \ganttmilestone{Prototype working}{8} \\
+    \ganttbar{Implementation}{8}{12} \\
+    \ganttbar{Tests and evaluation}{10}{12} \\
+    \ganttgroup{Reporting}{8}{20} \\
+    \ganttbar{Half-time report}{8}{10} \\
+    \ganttmilestone{Half-time report to supervisor}{9} \\
+    \ganttmilestone{Half-time report to examiner}{10} \\
+    \ganttbar{Write thesis}{11}{18} \\
+    \ganttmilestone{Draft to supervisor}{16} \\
+    \ganttmilestone{Thesis to examiner}{18} \\
+    \ganttmilestone{UtExpo}{19} \\
+    \ganttmilestone{Presentation and opposition}{20}
+  \end{ganttchart}
+  \caption{Example of a Gantt chart for the project plan}
+  \label{fig:gantt-plan}
+\end{figure}
+\end{onlyplan}
+\begin{onlymidterm}
+
+Figure~\ref{fig:gantt-midterm} is the Gantt chart from the Project Plan, updated for the half-time report in week 10 (red line). The filled part of each bar shows how much of the activity is done, and the white part what remains. Where the plan has changed, a thin grey bar under the activity shows the original plan. Keep the final deadlines unless you have agreed on new ones with your supervisor and examiner.
+
+\begin{figure}[htbp]
+  \centering
+  \begin{ganttchart}[hhgantt, today=10, today label={Now}]{1}{20}
+    \gantttitle{Week}{20} \\
+    \gantttitlelist{1,...,20}{1} \\
+    \ganttgroup{Planning}{1}{3} \\
+    \ganttbar[progress=100]{Project plan}{1}{3} \\
+    \ganttmilestone{Project plan to examiner}{3} \\
+    \ganttgroup{Technical background}{2}{10} \\
+    \ganttbar[progress=100]{Literature study}{2}{6}
+      \ganttbar[hhplanned]{}{2}{5} \\
+    \ganttbar[progress=80]{Write technical background}{4}{10}
+      \ganttbar[hhplanned]{}{4}{9} \\
+    \ganttgroup{Practical work}{4}{14} \\
+    \ganttbar[progress=100]{Requirements and design}{4}{6} \\
+    \ganttbar[progress=100]{First prototype}{6}{8} \\
+    \ganttmilestone{Prototype working}{8} \\
+    \ganttbar[progress=0]{Wait for new hardware (new)}{9}{11} \\
+    \ganttbar[progress=40]{Implementation}{8}{13}
+      \ganttbar[hhplanned]{}{8}{12} \\
+    \ganttbar[progress=0]{Tests and evaluation}{12}{14}
+      \ganttbar[hhplanned]{}{10}{12} \\
+    \ganttgroup{Reporting}{8}{20} \\
+    \ganttbar[progress=100]{Half-time report}{8}{10} \\
+    \ganttmilestone{Half-time report to supervisor}{9} \\
+    \ganttmilestone{Half-time report to examiner}{10} \\
+    \ganttbar[progress=0]{Write thesis}{11}{18} \\
+    \ganttmilestone{Draft to supervisor}{16} \\
+    \ganttmilestone{Thesis to examiner}{18} \\
+    \ganttmilestone{UtExpo}{19} \\
+    \ganttmilestone{Presentation and opposition}{20}
+  \end{ganttchart}
+  \caption{Example of an updated Gantt chart for the half-time report}
+  \label{fig:gantt-midterm}
+\end{figure}
+\end{onlymidterm}
 \end{instructions}
 
 \begin{onlymidterm}
